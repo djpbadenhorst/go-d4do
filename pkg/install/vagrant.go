@@ -15,15 +15,8 @@ func VagrantInstall() {
 		tempDir, _ := os.MkdirTemp(config.AppConfigDir, "temp")
 		defer os.RemoveAll(tempDir)
 
-		if isInstalled := CurlCheck(); !isInstalled {
-			log.Println("Installing Curl")
-			CurlInstall()
-		}
-
-		if isInstalled := UnzipCheck(); !isInstalled {
-			log.Println("Installing Unzip")
-			UnzipInstall()
-		}
+		InstallIfNotInstalled("Curl")
+		InstallIfNotInstalled("Unzip")
 
 		command.Exec("sudo", "apt", "install", "-y", "libfuse-dev")
 		command.Exec("curl", "-o", tempDir + "/vagrant.zip", "https://releases.hashicorp.com/vagrant/2.4.3/vagrant_2.4.3_linux_amd64.zip")

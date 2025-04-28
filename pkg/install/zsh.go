@@ -10,10 +10,8 @@ import (
 func ZshInstall() {
 	switch opSys := runtime.GOOS; opSys {
 	case "linux":
-		if isInstalled := EzaCheck(); !isInstalled {
-			log.Println("Installing Eza")
-			EzaInstall()
-		}
+                InstallIfNotInstalled("Kitty")
+		InstallIfNotInstalled("Eza")
 		
 		command.Exec("sudo", "apt", "install", "-y", "zsh")
 		command.Exec("bash", "-c", "curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh")
